@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Short Pick Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Operations dashboard</p>
+          <h1>Short Pick Calculator</h1>
+        </div>
+        <button id="downloadTemplateBtn" class="secondary-btn">Download sample file</button>
+      </header>
+
+      <main class="content">
+        <section class="panel uploader-panel">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Import data</p>
+              <h2>Upload Excel or CSV export</h2>
+            </div>
+          </div>
+
+          <div class="upload-area">
+            <label class="file-input" for="fileInput">
+              <input id="fileInput" type="file" accept=".csv,.xlsx,.xls" />
+              <span>Choose Excel or CSV file</span>
+            </label>
+            <div class="sample-hint">
+              Expected columns: picker, SKU/item, location, status, short pick, false short pick, not found item
+            </div>
+          </div>
+
+          <div id="mappingBox" class="mapping-box hidden">
+            <div class="panel-subhead">
+              <h3>Map your columns</h3>
+            </div>
+            <div id="mappingFields" class="mapping-grid"></div>
+            <button id="applyMappingBtn" class="primary-btn">Apply mapping</button>
+          </div>
+        </section>
+
+        <section class="panel summary-panel">
+          <div class="panel-head">
+            <div>
+              <p class="section-kicker">Overview</p>
+              <h2>Performance summary</h2>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <article class="metric-card accent-blue">
+              <span>Total Picks</span>
+              <strong id="totalPicks">0</strong>
+            </article>
+            <article class="metric-card accent-red">
+              <span>Short Picks</span>
+              <strong id="shortPickCount">0</strong>
+            </article>
+            <article class="metric-card accent-orange">
+              <span>Short Pick %</span>
+              <strong id="shortPickPct">0%</strong>
+            </article>
+            <article class="metric-card accent-yellow">
+              <span>False Short Pick</span>
+              <strong id="falseShortCount">0</strong>
+            </article>
+            <article class="metric-card accent-purple">
+              <span>False Short Pick %</span>
+              <strong id="falseShortPct">0%</strong>
+            </article>
+            <article class="metric-card accent-green">
+              <span>Not Found Item</span>
+              <strong id="notFoundCount">0</strong>
+            </article>
+            <article class="metric-card accent-cyan">
+              <span>Not Found %</span>
+              <strong id="notFoundPct">0%</strong>
+            </article>
+            <article class="metric-card accent-gray">
+              <span>SKU Items</span>
+              <strong id="skuItemCount">0</strong>
+            </article>
+          </div>
+        </section>
+
+        <section class="dashboard-grid">
+          <article class="panel table-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="section-kicker">Breakdown</p>
+                <h3>By sku item</h3>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>SKU / Item</th>
+                    <th>Total</th>
+                    <th>Short Picks</th>
+                    <th>Short %</th>
+                  </tr>
+                </thead>
+                <tbody id="skuTableBody"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="panel table-panel">
+            <div class="panel-head compact">
+              <div>
+                <p class="section-kicker">Breakdown</p>
+                <h3>By picker</h3>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Picker</th>
+                    <th>Total</th>
+                    <th>Short Picks</th>
+                    <th>Short %</th>
+                  </tr>
+                </thead>
+                <tbody id="pickerTableBody"></tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="panel table-panel wide">
+            <div class="panel-head compact">
+              <div>
+                <p class="section-kicker">Breakdown</p>
+                <h3>By location</h3>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Location</th>
+                    <th>Total</th>
+                    <th>Short Picks</th>
+                    <th>Short %</th>
+                    <th>Not Found</th>
+                    <th>Not Found %</th>
+                  </tr>
+                </thead>
+                <tbody id="locationTableBody"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
